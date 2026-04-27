@@ -30,4 +30,31 @@ abstract final class AppTextStyles {
         height: 1.33,
         color: color ?? AppColors.onSurfaceSecondary,
       );
+
+  static TextTheme textTheme({
+    Color? headlineColor,
+    Color? bodyColor,
+    Color? labelColor,
+  }) {
+    final h = headlineColor ?? AppColors.onSurfacePrimary;
+    final b = bodyColor ?? AppColors.onSurfacePrimary;
+    final l = labelColor ?? AppColors.onSurfaceSecondary;
+    return TextTheme(
+      headlineLarge: headline(h),
+      headlineMedium: headline(h),
+      headlineSmall: headline(h),
+      titleLarge: body(b),
+      titleMedium: label(l),
+      titleSmall: label(l),
+      bodyLarge: body(b),
+      bodyMedium: body(b),
+      bodySmall: label(l),
+      labelLarge: label(l),
+      labelMedium: label(l),
+      labelSmall: label(l),
+      displayLarge: headline(h),
+      displayMedium: headline(h),
+      displaySmall: headline(h),
+    );
+  }
 }

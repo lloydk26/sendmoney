@@ -11,6 +11,9 @@ abstract final class AppButtonStyles {
   static RoundedRectangleBorder _shape([double radius = _radius]) =>
       RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius));
 
+  /// Alias for [primaryFilled] (design-system naming).
+  static ButtonStyle primary() => primaryFilled();
+
   static ButtonStyle primaryFilled() {
     return FilledButton.styleFrom(
       backgroundColor: AppColors.primary,
