@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/storage/secure_storage_service.dart';
 import '../../../../core/theme/app_button_styles.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/app_text_field.dart';
+import '../../../../injection/injection.dart';
+import '../../../dashboard/domain/services/dashboard_service.dart';
+import '../../../dashboard/presentation/cubits/dashboard_cubit.dart';
 import '../../../dashboard/presentation/views/dashboard_view.dart';
 import '../cubits/login_cubit.dart';
 import '../models/login_state.dart';
@@ -35,7 +39,13 @@ class _LoginViewState extends State<LoginView> {
           success: (_) {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute<void>(
-                builder: (_) => const DashboardView(),
+                builder: (_) => BlocProvider(
+                  create: (_) => DashboardCubit(
+                    getIt<DashboardService>(),
+                    getIt<SecureStorageService>(),
+                  ),
+                  child: const DashboardView(),
+                ),
               ),
             );
           },
@@ -67,7 +77,7 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'AETHER',
+                    'PadalaQ',
                     style: AppTextStyles.headline(),
                     textAlign: TextAlign.center,
                   ),
@@ -110,13 +120,6 @@ class _LoginViewState extends State<LoginView> {
                                   letterSpacing: 1.2,
                                   color: AppColors.onSurfaceSecondary,
                                 ),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                'Recover',
-                                style: AppTextStyles.label(AppColors.primary),
                               ),
                             ),
                           ],
