@@ -48,12 +48,15 @@ Before running unit tests, make sure generated files are up to date:
    fvm flutter test
    ```
 
-## Notes- Login credentials:
+## Notes- 
 
 
+Login credentials:
 - username: `lloyd`
 - password: `pogi`
+
 - Supported account number for send money: `1234567890`
+
 - The app includes an offline mode (wallet data is cached and used when API calls fail).
 - The backend currently uses mock APIs, so actions like sending money do not dynamically update the transaction list.
 - iOS is not set up yet because it requires creating an Apple Developer account.
