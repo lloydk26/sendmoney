@@ -25,6 +25,12 @@ import 'package:send_money/features/dashboard/domain/mapper/dashboard_mapper.dar
     as _i524;
 import 'package:send_money/features/dashboard/domain/services/dashboard_service.dart'
     as _i640;
+import 'package:send_money/features/send_money/data/api/send_money_api.dart'
+    as _i910;
+import 'package:send_money/features/send_money/domain/mapper/send_money_mapper.dart'
+    as _i1042;
+import 'package:send_money/features/send_money/domain/services/send_money_service.dart'
+    as _i217;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -36,6 +42,7 @@ extension GetItInjectableX on _i174.GetIt {
     final appModule = _$AppModule();
     gh.factory<_i696.AuthMapper>(() => _i696.AuthMapper());
     gh.factory<_i524.DashboardMapper>(() => _i524.DashboardMapper());
+    gh.factory<_i1042.SendMoneyMapper>(() => _i1042.SendMoneyMapper());
     gh.lazySingleton<_i81.DioProvider>(() => _i81.DioProvider());
     gh.lazySingleton<_i312.SecureStorageService>(
       () => _i312.SecureStorageService(),
@@ -54,6 +61,19 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i177.DashboardApi(
         gh<_i81.DioProvider>(),
         gh<String>(instanceName: 'appServerUrl'),
+      ),
+    );
+    gh.lazySingleton<_i910.SendMoneyApi>(
+      () => _i910.SendMoneyApi(
+        gh<_i81.DioProvider>(),
+        gh<String>(instanceName: 'appServerUrl'),
+      ),
+    );
+    gh.lazySingleton<_i217.SendMoneyService>(
+      () => _i217.SendMoneyServiceImpl(
+        gh<_i910.SendMoneyApi>(),
+        gh<_i1042.SendMoneyMapper>(),
+        gh<_i312.SecureStorageService>(),
       ),
     );
     gh.lazySingleton<_i640.DashboardService>(

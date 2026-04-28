@@ -9,6 +9,9 @@ import '../../../../injection/injection.dart';
 import '../../../auth/domain/services/auth_service.dart';
 import '../../../auth/presentation/cubits/login_cubit.dart';
 import '../../../auth/presentation/views/login_view.dart';
+import '../../../send_money/domain/services/send_money_service.dart';
+import '../../../send_money/presentation/cubits/send_money_cubit.dart';
+import '../../../send_money/presentation/views/send_money_view.dart';
 import '../../domain/entities/transaction_entity.dart';
 import '../../domain/entities/wallet_entity.dart';
 import '../cubits/dashboard_cubit.dart';
@@ -105,7 +108,7 @@ class _DashboardViewState extends State<DashboardView> {
         children: [
           _buildBalanceCard(wallet),
           const SizedBox(height: 16),
-          _buildSendMoneyRow(),
+          _buildSendMoneyRow(wallet),
           const SizedBox(height: 24),
           _buildTransactionsSection(wallet),
         ],
@@ -193,9 +196,16 @@ class _DashboardViewState extends State<DashboardView> {
     );
   }
 
-  Widget _buildSendMoneyRow() {
+  Widget _buildSendMoneyRow(WalletEntity wallet) {
     return GestureDetector(
-      onTap: _showComingSoon,
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) => BlocProvider(
+            create: (_) => SendMoneyCubit(getIt<SendMoneyService>()),
+            child: SendMoneyView(availableBalance: wallet.balance),
+          ),
+        ),
+      ),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
@@ -223,10 +233,6 @@ class _DashboardViewState extends State<DashboardView> {
                     'Send Money',
                     style: AppTextStyles.body()
                         .copyWith(fontWeight: FontWeight.w600),
-                  ),
-                  Text(
-                    'Transfer to any bank',
-                    style: AppTextStyles.label(AppColors.onSurfaceSecondary),
                   ),
                 ],
               ),
