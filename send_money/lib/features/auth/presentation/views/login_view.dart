@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/cache/wallet_cache_service.dart';
 import '../../../../core/storage/secure_storage_service.dart';
 import '../../../../core/theme/app_button_styles.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -43,6 +44,7 @@ class _LoginViewState extends State<LoginView> {
                   create: (_) => DashboardCubit(
                     getIt<DashboardService>(),
                     getIt<SecureStorageService>(),
+                    getIt<WalletCacheService>(),
                   ),
                   child: const DashboardView(),
                 ),
@@ -168,11 +170,13 @@ class _LoginViewState extends State<LoginView> {
                                           Text(
                                             'SIGN IN',
                                             style:
-                                                AppTextStyles.label(AppColors.onAccentFill)
-                                                    .copyWith(
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: AppTextStyles.bodySize,
-                                            ),
+                                                AppTextStyles.label(
+                                                  AppColors.onAccentFill,
+                                                ).copyWith(
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize:
+                                                      AppTextStyles.bodySize,
+                                                ),
                                           ),
                                           const SizedBox(width: 8),
                                           Icon(
@@ -204,9 +208,6 @@ class _LoginViewState extends State<LoginView> {
     if (current.maybeWhen(loading: () => true, orElse: () => false)) {
       return;
     }
-    cubit.login(
-      _userController.text.trim(),
-      _passwordController.text,
-    );
+    cubit.login(_userController.text.trim(), _passwordController.text);
   }
 }

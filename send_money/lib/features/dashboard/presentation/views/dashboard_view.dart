@@ -27,12 +27,12 @@ class DashboardView extends StatefulWidget {
 
 class _DashboardViewState extends State<DashboardView> {
   bool _balanceVisible = true;
-  final int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
     context.read<DashboardCubit>().loadWalletData();
+    context.read<DashboardCubit>().listenToConnectivity();
   }
 
   @override
@@ -132,8 +132,9 @@ class _DashboardViewState extends State<DashboardView> {
                       Expanded(
                         child: Text(
                           'TOTAL WALLET BALANCE',
-                          style: AppTextStyles.label(AppColors.onSurfaceSecondary)
-                              .copyWith(letterSpacing: 1.2),
+                          style: AppTextStyles.label(
+                            AppColors.onSurfaceSecondary,
+                          ).copyWith(letterSpacing: 1.2),
                         ),
                       ),
                       GestureDetector(
@@ -164,7 +165,8 @@ class _DashboardViewState extends State<DashboardView> {
                               TextSpan(
                                 text: ' PHP',
                                 style: AppTextStyles.body(
-                                    AppColors.onSurfaceSecondary),
+                                  AppColors.onSurfaceSecondary,
+                                ),
                               ),
                             ],
                           ),
@@ -197,7 +199,10 @@ class _DashboardViewState extends State<DashboardView> {
         MaterialPageRoute<void>(
           builder: (_) => BlocProvider(
             create: (_) => SendMoneyCubit(getIt<SendMoneyService>()),
-            child: SendMoneyView(availableBalance: wallet.balance, onLogout: () => context.read<DashboardCubit>().logout(),),
+            child: SendMoneyView(
+              availableBalance: wallet.balance,
+              onLogout: () => context.read<DashboardCubit>().logout(),
+            ),
           ),
         ),
       ),
@@ -216,8 +221,11 @@ class _DashboardViewState extends State<DashboardView> {
                 color: AppColors.primary,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.send,
-                  color: AppColors.onAccentFill, size: 20),
+              child: const Icon(
+                Icons.send,
+                color: AppColors.onAccentFill,
+                size: 20,
+              ),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -226,14 +234,17 @@ class _DashboardViewState extends State<DashboardView> {
                 children: [
                   Text(
                     'Send Money',
-                    style: AppTextStyles.body()
-                        .copyWith(fontWeight: FontWeight.w600),
+                    style: AppTextStyles.body().copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ],
               ),
             ),
-            const Icon(Icons.chevron_right,
-                color: AppColors.onSurfaceSecondary),
+            const Icon(
+              Icons.chevron_right,
+              color: AppColors.onSurfaceSecondary,
+            ),
           ],
         ),
       ),
@@ -250,8 +261,9 @@ class _DashboardViewState extends State<DashboardView> {
             Expanded(
               child: Text(
                 'Recent Transactions',
-                style:
-                    AppTextStyles.body().copyWith(fontWeight: FontWeight.w600),
+                style: AppTextStyles.body().copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
             GestureDetector(
@@ -263,8 +275,10 @@ class _DashboardViewState extends State<DashboardView> {
                   ),
                 ),
               ),
-              child: Text('View All',
-                  style: AppTextStyles.label(AppColors.primary)),
+              child: Text(
+                'View All',
+                style: AppTextStyles.label(AppColors.primary),
+              ),
             ),
           ],
         ),
@@ -279,8 +293,7 @@ class _DashboardViewState extends State<DashboardView> {
                   padding: const EdgeInsets.all(16),
                   child: Text(
                     'No transactions yet.',
-                    style:
-                        AppTextStyles.body(AppColors.onSurfaceSecondary),
+                    style: AppTextStyles.body(AppColors.onSurfaceSecondary),
                     textAlign: TextAlign.center,
                   ),
                 )
@@ -333,8 +346,7 @@ class _DashboardViewState extends State<DashboardView> {
               ),
               const SizedBox(height: 4),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
                   color: Colors.greenAccent.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(4),
@@ -358,8 +370,11 @@ class _DashboardViewState extends State<DashboardView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(message,
-                style: AppTextStyles.body(), textAlign: TextAlign.center),
+            Text(
+              message,
+              style: AppTextStyles.body(),
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: 16),
             SizedBox(
               height: 48,
@@ -367,8 +382,10 @@ class _DashboardViewState extends State<DashboardView> {
                 style: AppButtonStyles.primary(),
                 onPressed: () =>
                     context.read<DashboardCubit>().loadWalletData(),
-                child: Text('Retry',
-                    style: AppTextStyles.body(AppColors.onAccentFill)),
+                child: Text(
+                  'Retry',
+                  style: AppTextStyles.body(AppColors.onAccentFill),
+                ),
               ),
             ),
           ],
@@ -376,8 +393,6 @@ class _DashboardViewState extends State<DashboardView> {
       ),
     );
   }
-
-
 }
 
 class _WavePainter extends CustomPainter {
@@ -390,14 +405,20 @@ class _WavePainter extends CustomPainter {
     final path = Path()
       ..moveTo(0, size.height * 0.6)
       ..cubicTo(
-        size.width * 0.2, size.height * 0.1,
-        size.width * 0.35, size.height,
-        size.width * 0.5, size.height * 0.5,
+        size.width * 0.2,
+        size.height * 0.1,
+        size.width * 0.35,
+        size.height,
+        size.width * 0.5,
+        size.height * 0.5,
       )
       ..cubicTo(
-        size.width * 0.65, 0,
-        size.width * 0.8, size.height,
-        size.width, size.height * 0.4,
+        size.width * 0.65,
+        0,
+        size.width * 0.8,
+        size.height,
+        size.width,
+        size.height * 0.4,
       )
       ..lineTo(size.width, size.height)
       ..lineTo(0, size.height)

@@ -6,6 +6,7 @@
 import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:send_money/core/cache/wallet_cache_service.dart' as _i6;
 import 'package:send_money/core/storage/secure_storage_service.dart' as _i5;
 import 'package:send_money/features/dashboard/domain/entities/wallet_entity.dart'
     as _i2;
@@ -77,6 +78,30 @@ class MockSecureStorageService extends _i1.Mock
   _i4.Future<void> deleteToken() =>
       (super.noSuchMethod(
             Invocation.method(#deleteToken, []),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
+}
+
+/// A class which mocks [WalletCacheService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockWalletCacheService extends _i1.Mock
+    implements _i6.WalletCacheService {
+  @override
+  _i4.Future<void> saveWallet(_i2.WalletEntity? wallet) =>
+      (super.noSuchMethod(
+            Invocation.method(#saveWallet, [wallet]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> clear() =>
+      (super.noSuchMethod(
+            Invocation.method(#clear, []),
             returnValue: _i4.Future<void>.value(),
             returnValueForMissingStub: _i4.Future<void>.value(),
           )
