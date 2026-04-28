@@ -1,17 +1,53 @@
 # send_money
 
-A new Flutter project.
+## Run the Application
 
-## Getting Started
+Follow these steps in order from the project root:
 
-This project is a starting point for a Flutter application.
+1. Install FVM:
+   ```bash
+   dart pub global activate fvm
+   ```
 
-A few resources to get you started if this is your first Flutter project:
+2. Add FVM to your terminal PATH:
+   ```bash
+   export PATH="$PATH:$HOME/.pub-cache/bin"
+   ```
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+3. Install the exact Flutter version required by this project:
+   ```bash
+   fvm install 3.41.8
+   ```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+4. Install dependencies:
+   ```bash
+   fvm flutter pub get
+   ```
+
+5. Run code generation for Retrofit and other generated files:
+   ```bash
+   fvm flutter pub run build_runner build --delete-conflicting-outputs
+   ```
+
+6. Run the project:
+   ```bash
+   fvm flutter run
+   ```
+
+## Run Unit Tests
+
+Before running unit tests, make sure generated files are up to date:
+
+1. Run code generation:
+   ```bash
+   fvm flutter pub run build_runner build --delete-conflicting-outputs
+   ```
+
+2. Run unit tests:
+   ```bash
+   fvm flutter test
+   ```
+
+## Notes
+
+- iOS is not set up yet because it requires creating an Apple Developer account.
