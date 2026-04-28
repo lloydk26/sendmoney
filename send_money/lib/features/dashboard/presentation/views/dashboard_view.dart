@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:send_money/features/transaction_history/presentation/views/transaction_view.dart';
 
 import '../../../../core/storage/secure_storage_service.dart';
 import '../../../../core/theme/app_button_styles.dart';
@@ -32,12 +33,6 @@ class _DashboardViewState extends State<DashboardView> {
   void initState() {
     super.initState();
     context.read<DashboardCubit>().loadWalletData();
-  }
-
-  void _showComingSoon() {
-    ScaffoldMessenger.of(context)
-      ..clearSnackBars()
-      ..showSnackBar(const SnackBar(content: Text('Coming soon')));
   }
 
   @override
@@ -202,7 +197,7 @@ class _DashboardViewState extends State<DashboardView> {
         MaterialPageRoute<void>(
           builder: (_) => BlocProvider(
             create: (_) => SendMoneyCubit(getIt<SendMoneyService>()),
-            child: SendMoneyView(availableBalance: wallet.balance),
+            child: SendMoneyView(availableBalance: wallet.balance, onLogout: () => context.read<DashboardCubit>().logout(),),
           ),
         ),
       ),
@@ -260,7 +255,14 @@ class _DashboardViewState extends State<DashboardView> {
               ),
             ),
             GestureDetector(
-              onTap: _showComingSoon,
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => TransactionsView(
+                    transactions: wallet.transactions,
+                    onLogout: () => context.read<DashboardCubit>().logout(),
+                  ),
+                ),
+              ),
               child: Text('View All',
                   style: AppTextStyles.label(AppColors.primary)),
             ),

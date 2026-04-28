@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:send_money/features/dashboard/presentation/cubits/dashboard_cubit.dart';
 
 import '../../../../core/theme/app_button_styles.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -11,9 +12,10 @@ import '../cubits/send_money_cubit.dart';
 import '../models/send_money_state.dart';
 
 class SendMoneyView extends StatefulWidget {
-  const SendMoneyView({super.key, required this.availableBalance});
+  const SendMoneyView({super.key, required this.availableBalance, required this.onLogout,});
 
   final double availableBalance;
+  final VoidCallback onLogout;
 
   @override
   State<SendMoneyView> createState() => _SendMoneyViewState();
@@ -94,6 +96,12 @@ class _SendMoneyViewState extends State<SendMoneyView> {
                   color: AppColors.onSurfacePrimary),
               onPressed: () => Navigator.of(context).pop(),
             ),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.logout, color: AppColors.onSurfacePrimary),
+                onPressed: widget.onLogout,
+              ),
+            ],
           ),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
